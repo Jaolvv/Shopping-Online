@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cqipc.edu.dao.ProductDao">
+	<select id="selectProductAlls" resultType="org.cqipc.edu.bean.Product">
+			select p.p_id as "p_id",cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+	p.p_name as "p_name",p.p_price as "p_price",p.p_supplier as "p_supplier",
+	p.p_imgName as "p_imgName"
+	from product p,ccategory cg where p.cg_id=cg.cg_id
+	</select>
+	<select id="selectProductAll" resultType="org.cqipc.edu.bean.Product">
+		select p.p_id as "p_id",cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+p.p_name as "p_name",p.p_price as "p_price",p.p_supplier as "p_supplier",p.p_imgName as "p_imgName"
+from product p,ccategory cg where p.cg_id=cg.cg_id limit #{pageCount},#{pageSize}
+	</select>
+	<select id="selectProductByCgid" resultType="org.cqipc.edu.bean.Product">
+		select p.p_id as "p_id",cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+p.p_name as "p_name",p.p_price as "p_price",p.p_supplier as "p_supplier",p.p_imgName as "p_imgName"
+from product p,ccategory cg where p.cg_id=cg.cg_id and cg.cg_id=#{cg_id}
+	</select>
+	<select id="selectProductById" resultType="org.cqipc.edu.bean.Product">
+		select p.p_id as "p_id",cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+p.p_name as "p_name",p.p_price as "p_price",p.p_supplier as "p_supplier",p.p_imgName as "p_imgName"
+from product p,ccategory cg where p.cg_id=cg.cg_id and p.p_id=#{p_id}
+	</select>
+	<select id="selecrProductCount" resultType="int">
+		select count(*) from product
+	</select>
+	<insert id="addProduct">
+		insert into product values(null,#{cgId.cg_id},#{p_name},
+		#{p_price},#{p_supplier},#{p_imgName})
+	</insert>
+	<update id="modifyProduct">
+		update product set cg_id=#{cgId.cg_id},
+		p_name=#{p_name},p_price=#{p_price},p_supplier=#{p_supplier},
+		p_imgName=#{p_imgName} where p_id=#{p_id}
+	</update>
+	<select id="updateOrderdetailSelectProducts" resultType="org.cqipc.edu.bean.Product">
+		select * from product
+	</select>
+	<select id="selectProductPriceById" resultType="Double">
+		select p_price from product where p_id=#{p_id}
+	</select>
+	<select id="usersSelectProductByCgid" resultType="org.cqipc.edu.bean.Product">
+		select p.p_id as "p_id",cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+p.p_name as "p_name",p.p_price as "p_price",p.p_supplier as "p_supplier",p.p_imgName as "p_imgName"
+from product p,ccategory cg where p.cg_id=cg.cg_id and cg.cg_id=#{cg_id} limit #{pageCount},#{pageSize}
+	</select>
+	<select id="usersSelectProductByCgidCount" resultType="int">
+		select count(*) from product where cg_id=#{cg_id}
+	</select>
+</mapper>

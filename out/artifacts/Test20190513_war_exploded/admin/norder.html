@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="GBK">
+<title>订单管理</title>
+<script src="../EasyUI/jquery.min.js"></script>
+<script src="../EasyUI/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../js/norder.js"></script>
+<script type="text/javascript" src="../js/orderdetail.js"></script>
+<script src="../js/easyui-lang-zh_CN.js"></script>
+<link href="../EasyUI/themes/default/easyui.css" rel="stylesheet" />
+<link href="../EasyUI/themes/icon.css" rel="stylesheet" />
+<link href="../css/demo.css" rel="stylesheet" />
+</head>
+<body>
+	<table class="btbHead" width="100%">
+		<tr>
+			<td style="width: 35%"><img src="../images/common/title.gif"
+				align="absmiddle" />订单信息 <input id="uIds" name="uIds"
+				class="easyui-combobox"
+				data-options="editable:false,panelHeight:'auto'"
+				style="width: 120px;" /></td>
+			<td style="width: 64%; text-align: right;">
+			<a
+				href=" javascript:insertNorder()" class="easyui-linkbutton"
+				iconCls="icon-add">添加</a> <a href="javascript:deleteNorder()"
+				class="easyui-linkbutton" iconCls="icon-edit">删除</a> 
+			<a
+				href="javascript:updateNorder()" class="easyui-linkbutton"
+				iconCls="icon-edit">修改</a></td>
+		</tr>
+	</table>
+	<table id="norderdg" class="easyui-datagrid" style="width: 100%">
+	</table>
+	<!--订单数据的只能增或修改弹窗-->
+	<div id="NorderDiv" style="display: none;" class="easyui-dialog"
+		data-options="closed:true,width:'400',buttons:'#pp',align:'center',modal:true">
+		<form id="Norderform" method="POST" class="easyui-form">
+			<table
+				style="border-collapse: separate; border-spacing: 5px; padding-tio: 50px;"
+				align="center">
+				<tr>
+					<td>所属用户</td>
+					<td><input id="no_id" name="no_id" value="0" type="hidden" />
+						<input id="u_id" name="u_id" class="easyui-combobox"
+						data-options="editable:false,panelHeight:'auto'"
+						style="width: 240px;" /> <input id="no_orderdate"
+						name="no_orderdate" value="1987-03-20" type="hidden" /></td>
+				</tr>
+				<tr>
+					<td>寄送地址</td>
+					<td><input id="no_addr" name="no_addr"
+						style="width: 240px; background-color: #e9e9e9;"
+						class="easyui-textbox"
+						data-options="prompt:'请输入寄送地址' ,required:true,missingMessage:'此项必填'" />
+					</td>
+				</tr>
+				<tr>
+					<td>订单总价</td>
+					<td><input id="no_sumprice" name="no_sumprice" value="0"
+						style="width: 240px; background-color: #e9e9e9;"
+						class="easyui-textbox"
+						data-options="prompt:'请输入总价',required:true,missingMessage:'此项必填'" />
+					</td>
+				</tr>
+			</table>
+			<!--确认取消按钮-->
+			<div id="pp" style="text-align: right;">
+				<a href="#" class="easyui-linkbutton" onclick="submitNorderInfo()"
+					iconCls="icon-ok">保存</a> <a href="#" class="easyui-linkbutton"
+					onclick="doCancle()" iconCls="icon-cancel">取消</a>
+			</div>
+		</form>
+	</div>
+	<!--订单中明细的子窗口-->
+	<div id="orderdetailDiv" style="display: none;" class="easyui-dialog"
+		data-options="closed:true,width:'800',buttons:'#aa',align:'center',modal:true">
+		<table class="btbHead" width="100%">
+			<tr>
+				<td style="width: 35%"><img src="../images/common/title.gif"
+					align="absmiddle" />明细信息</td>
+				<td style="width: 64%; text-align: right;"><a
+					href="javascript:insertOrderdetail()" class="easyui-linkbutton"
+					iconCls="icon-add">添加</a> <a href="javascript:deleteOrderdetail()"
+					class="easyui-linkbutton" iconCls="icon-edit">删除</a> <a
+					href="javascript:updateOrderdetail()" class="easyui-linkbutton"
+					iconCls="icon-edit">修改</a></td>
+			</tr>
+		</table>
+		<table id="orderdetaildg" class="easyui-datagrid" style="width: 100%">
+		</table>
+		<!--订单中明细窗口中的信息操作窗口-->
+		<div id="orderDiv" style="display: none;" class="easyui-dialog"
+			data-options="closed:true,width:'400',buttons:'#ww',align:'center',modal:true">
+			<form id="orderform" method="POST" class="easyui-form">
+				<table
+					style="border-collapse: separate; border-spacing: 5px; padding-tio: 50px;"
+					align="center">
+					<tr>
+						<td>所属订单</td>
+						<td><input id="o_id" name="o_id" value="0" type="hidden" /> <input
+							id="noid" name="noid"
+							style="width: 240px; background-color: #e9e9e9;"
+							class="easyui-textbox"
+							data-options="prompt:'请输入订单号码' ,required:true,missingMessage:'此项必填'" />
+						</td>
+					</tr>
+					<tr>
+						<td>商品列表</td>
+						<td><input id="p_id" name="p_id" class="easyui-combobox"
+							data-options="editable:false,panelHeight:'auto'"
+							style="width: 240px;" /></td>
+					</tr>
+					<tr>
+						<td>购买数量</td>
+						<td><input id="quantity" name="quantity"
+							style="width: 240px; background-color: #e9e9e9;"
+							class="easyui-textbox"
+							data-options="prompt:'请输入购买数量',required:true,missingMessage:'此项必填'" />
+						</td>
+					</tr>
+					<tr>
+						<td>明细总价</td>
+						<td><input id="price" name="price"
+							style="width: 240px; background-color: #e9e9e9;"
+							class="easyui-textbox"
+							data-options="prompt:'请输入明细总价',required:true,missingMessage:'此项必填'" />
+						</td>
+					</tr>
+				</table>
+				<!--确认取消按钮-->
+				<div id="ww" style="text-align: right;">
+					<a href="#" class="easyui-linkbutton"
+						onclick=" submitOrderdetailInfo()" iconCls="icon-ok">保存</a> <a
+						href="#" class="easyui-linkbutton" onclick="doCancle3()"
+						iconCls="icon-cancel">取消</a>
+				</div>
+			</form>
+		</div>
+		<!--确认取消按钮-->
+		<div id="aa" style="text-align: right;">
+			<a href="#" class="easyui-linkbutton" onclick="doCancle2()"
+				iconCls="icon-cancel">关闭</a>
+		</div>
+	</div>
+
+
+
+
+</body>
+</html>

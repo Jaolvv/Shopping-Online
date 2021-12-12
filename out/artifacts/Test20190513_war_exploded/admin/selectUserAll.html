@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="GBK">
+    <title>查询所有用户</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="../EasyUI/jquery.min.js"></script>
+    <script src="../EasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/selectUserInfo.js"></script>
+    <script src="../js/easyui-lang-zh_CN.js"></script>
+    <link href="../EasyUI/themes/default/easyui.css" rel="stylesheet"/>
+    <link href="../EasyUI/themes/icon.css" rel="stylesheet"/>
+    <link href="../css/demo.css" rel="stylesheet"/>
+</head>
+<body>
+<table class="btbHead" width="100%">
+    <tr>
+        <td style="width: 20%"><img src="../js/common/title.gif" align="absmiddle"/>用户信息
+        </td>
+        <td style="width: 45%; text-align: right;">
+			<a href="javascript:insertUserInfo()" class="easyui-linkbutton"
+			   iconCls="icon-add">添加</a> <a href="javascript:deleteUserInfo( )"
+											class="easyui-linkbutton" iconCls="icon-clear">删除</a>
+			<a href="javascript:updateUserInfo()" class="easyui-linkbutton" iconCls="icon-edit">修改</a></td>
+        <td style="width: 35%;">关键字:<input class="easyui-textbox" id="keyWord"
+										   data-options="prompt:'请输入查询用户的ID或者用户名',required:true,missingMessage:'此项必填'"
+                                           style="width: 60px;"/>
+			<a href="javascript:selectSearchUserInfo()" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+        </td>
+    </tr>
+</table>
+
+<table id="userdg" class="easyui-datagrid" style="width: 100%">
+</table>
+
+<!--添加修改或者添加的弹窗-->
+<div id="usersDiv" style="display: none;" class="easyui-dialog"
+     data-options="closed:true,width:'400',buttons:'#bb',align:'center',modal:true">
+    <form id="userUpdateform" method="POST" class="easyui-form">
+        <table style="border-collapse: separate; border-spacing: 5px; padding-tio: 50px," align="center">
+            <tr>
+                <td>用户名</td>
+                <td><input id="u_id" name="u_id" value="0" type="hidden"/> <input
+                        id="u_name" name="u_name"
+                        style="width: 240px; background-color: #e9e9e9;"
+                        class="easyui-textbox"
+                        data-options="prompt:'请输入用户名' ,required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input id="u_password" name="u_password" style="width: 240px; background-color: #e9e9e9;" class="easyui-textbox"
+                           data-options="prompt:'请输入密码' ,required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input id="u_email" name="u_email" style="width: 240px; background-color: #e9e9e9;" class="easyui-textbox"
+                           data-options="prompt:'请输入邮箱' ,required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>地址</td>
+                <td><input id="u_addr" name="u_addr" style="width: 240px; background-color: #e9e9e9;" class="easyui-textbox"
+                           data-options="prompt:'请输入地址',required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>邮编</td>
+                <td><input id="u_zip" name=“u_zip" style="width: 240px; background-color: #e9e9e9;"
+						   class="easyui-textbox" data-options="prompt:'请输入邮编',required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>电话</td>
+                <td><input id="u_phone" name="u_phone" style="width: 240px; background-color: #e9e9e9;" class="easyui-textbox"
+                           data-options="prompt:'请输入电话' ,required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+        </table>
+        <!--确认取消按钮-->
+        <div id="bb" style="text-align: right;">
+            <a href="#" class="easyui-linkbutton" onclick="submitUserInfo()"
+               iconCls="icon-ok">保存</a>
+			<a href="#" class="easyui-linkbutton" nclick="doCancle()" iconCls="icon-cancel">取消</a>
+        </div>
+    </form>
+</div>
+
+<!--显示用户详情的窗口-->
+<div id="showUserInfo" style="text-align: center;"
+     class="easyui-dialog"
+     data-options="closed:true,buttons:'#aa',modal:true,align:'center'">
+    <table
+            style="width: 100%; height: 100%; border-spacing: 10px;">
+        <tr>
+            <td style="text-align: right; width: 50px;">用户编号:&nbsp;</td>
+            <td style="text-align: left; width: 120px;"><label id="uids"></label>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; width: 50px;">用户名:&nbsp;</td>
+            <td style="text-align: left; width: 120px;"><label id="uname"></label>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; width: 50px;">用户邮箱:&nbsp;</td>
+            <td style="text-align: left; width: 120px;"><label id="uemail"></label>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; width: 50px;">用户地址:&nbsp;</td>
+            <td style="text-align: left; width: 120px;"><label id="uaddr"></label>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; width: 50px;">用户邮编:&nbsp;</td>
+            <td style="text-align: left; width: 120px;"><label id="uzip"></label>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; width: 50px;">用户电话:&nbsp;</td>
+            <td style="text-align: left; width: 120px;"><label id="uphone"></label>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; width: 50px;">注册时间:&nbsp;</td>
+            <td style="text-align: left; width: 120px;"><label
+                    id="ucreateDate"></label></td>
+        </tr>
+    </table>
+
+    <!-- 关闭按钮 -->
+    <div id="aa">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-cancle'"
+           onclick="closeDialog()">关闭</a>
+    </div>
+</div>
+</body>
+</html>

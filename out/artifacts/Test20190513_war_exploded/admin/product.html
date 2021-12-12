@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="GBK">
+    <title>商品信息</title>
+    <script src="../EasyUI/jquery.min.js"></script>
+    <script src="../EasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/product.js"></script>
+    <script src="../js/easyui-lang-zh_CN.js"></script>
+    <link href="../EasyUI/themes/default/easyui.css" rel="stylesheet"/>
+    <link href="../EasyUI/themes/icon.css" rel="stylesheet"/>
+    <link href="../css/demo.css" rel="stylesheet"/>
+    <style type="text/css">
+        .a-upload {
+            padding: 4px 10px;
+            height: 20px;
+            line-height: 20px;
+            position: relative;
+            cursor: pointer;
+            color: #888;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1
+        }
+
+        .a-upload input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            cursor: pointer
+        }
+
+        .a-upload:hover {
+            color: #444;
+            background: #eee;
+            border-color: #ccc;
+            text-decoration: none
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#selectEmpInfoDiv").dialog('close');
+            $("#selectCodeSkillInfoDiv").dialog('close');
+        });
+    </script>
+    <script type="text/javascript">
+        //判断浏览器是否支持FileReader接口
+        if (typeof FileReader == 'undefined') {
+            document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+            //使选择控件不可操作
+            document.getElementById("imageFileUrl").setAttribute("disabled", "disabled");
+        }
+
+        //选择图片，马上预览
+        function xmTanUploadImg(obj) {
+            var file = obj.files[0];
+            console.log(obj);
+            console.log(file);
+            console.log("file.size = " + file.size);  //file.size 单位为byte
+            var reader = new FileReader();
+            //读取文件过程方法
+            reader.onloadstart = function (e) {
+                console.log("开始读取....");
+            }
+            reader.onprogress = function (e) {
+                console.log("正在读取中....");
+            }
+            reader.onabort = function (e) {
+                console.log("中断读取....");
+            }
+            reader.onerror = function (e) {
+                console.log("读取异常....");
+            }
+            reader.onload = function (e) {
+                console.log("成功读取....");
+                var img = document.getElementById("prohead");
+                img.src = e.target.result;
+                //或者 img.src = this.result;  //e.target == this
+            }
+            reader.readAsDataURL(file)
+        }
+    </script>
+</head>
+<body>
+<table class="btbHead" width="100%">
+    <tr>
+        <td style="width: 30%">
+            <img src="../js/common/title.gif" align="absmiddle"/>商品信息
+            <input id="productId" name="productId" class="easyui-combobox"
+                   data-options="editable:false,panelHeight:'auto'" style="width:120px;"/>
+        </td>
+        <td style="width: 70%;text-align:right;">
+            <a href="javascript: insertProduct()" class="easyui-linkbutton" iconCls="icon-add">添加</a>
+            <a href="javascript: deleteProduct()" class="easyui-linkbutton" iconCls="icon-edit">删除</a>
+            <a href="javascript: updateProduct()" class="easyui-linkbutton" iconCls="icon-edit">修改</a>
+        </td>
+    </tr>
+</table>
+<table id="prodg" class="easyui-datagrid" style="width: 100%">
+
+</table>
+<!-- 添加修改或者添加的弹窗 -->
+<div id="ProductDiv" style="display: none;" class="easyui-dialog"
+     data-options="closed:true,width:'400',buttons:'#pp',align:'center',modal:true">
+    <form id="productform" method="POST" class="easyui-form" enctype="multipart/form-data">
+        <table style="border-collapse:separate;border-spacing:5px;padding-tio:50px;" align="center">
+            <tr>
+                <td>商品封面</td>
+                <td>
+                    <div style="padding-left:20px;width:90px;">
+                        <img id="prohead" width="120px;" height="120px;"/>
+                        <a href="javascript:;" class="a-upload">
+                            <input type="file" name="p_imgName" id="p_imgName"
+                                   onchange="xmTanUploadImg(this)" accept="image/*"/>上传图片
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>商品类型</td>
+                <td>
+                    <input id="p_id" name="p_id" value="0" type="hidden"/>
+                    <input id="cgId" name="cgId" class="easyui-combobox"
+                           data-options="editable:false,panelHeight:'auto'" style="width:240px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>商品名称</td>
+                <td>
+                    <input id="p_name" name="p_name" style="width: 240px;background-color:#e9e9e9;"
+                           class="easyui-textbox" data-options="prompt:'请输入商品名称',required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>商品单价</td>
+                <td>
+                    <input id="p_price" name="p_price" style="width: 240px;background-color:#e9e9e9;"
+                           class="easyui-textbox" data-options="prompt:'请输入价格',required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>供应商</td>
+                <td>
+                    <input id="p_supplier" name="p_supplier" style="width: 240px;background-color:#e9e9e9;"
+                           class="easyui-textbox" data-options="prompt:'请输入供应商',required:true,missingMessage:'此项必填'"/>
+                </td>
+            </tr>
+        </table>
+        <!-- 确认取消按钮 -->
+        <div id="pp" style="text-align:right;">
+            <a href="#" class="easyui-linkbutton" onclick="submitProductInfo()" iconCls="icon-ok">保存</a>
+            <a href="#" class="easyui-linkbutton" onclick="doCancle()" iconCls="icon-cancel">取消</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

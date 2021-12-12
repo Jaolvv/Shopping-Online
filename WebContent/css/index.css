@@ -1,0 +1,54 @@
+
+	a:link{
+		text-decoration:none;
+	}
+
+.big{
+	width:900px;
+	height:600px;
+	border:1px solid #F00;
+	margin:0 auto;
+}
+.top{
+	height:30%;
+	width:100%;
+	background-color:#666;
+	font-family:幼圆;
+}
+.middle{
+	width:100%;
+	height:60%;
+	font-family:幼圆;
+	background-color:#000;
+}
+
+.down{
+	width:100%;
+	height:10%;
+	background-color:#666;
+	font-family:幼圆;
+}
+
+.s1{
+	font-size:60px;
+}
+
+.left{
+	width:33%;
+	height:100%;
+	background-color:#00F;
+	float:left;
+}
+.center{
+	width:34%;
+	height:65%;
+	background-color:#3FF;
+	float:left;
+	padding-top:126px;
+}
+.right{
+	width:33%;
+	height:100%;
+	background-color:#9F0;
+	float:left;
+}

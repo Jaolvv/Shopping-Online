@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cqipc.edu.dao.UserinfoDao">
+    <insert id="addUserinfo">
+        insert into userinfo
+        values (null, #{u_name}, #{u_password}, #{u_email},
+                #{u_addr}, #{u_zip}, #{u_phone}, #{u_createDate})
+    </insert>
+    <update id="modifyUserinfo">
+        update userinfo
+        set u_name=#{u_name},
+            u_password=#{u_password},
+            u_email=#{u_email},
+            u_addr=#{u_addr},
+            u_zip=#{u_zip},
+            u_phone=#{u_phone}
+        where u_id = #{u_id}
+    </update>
+    <select id="selectUserinfoById" resultType="org.cqipc.edu.bean.Userinfo">
+        select *
+        from userinfo
+        where u_id = #{u_id}
+    </select>
+    <select id="selectUserInfoPageKeyWord" resultType="org.cqipc.edu.bean.Userinfo">
+        select *
+        from userinfo
+        where u_id like concat('%', #{keyWord}, '%')
+           or u_name like concat('%', #{keyWord}, '%') limit #{pageCount}
+            , #{pageSize}
+    </select>
+    <select id="selectUserinfoAll" resultType="org.cqipc.edu.bean.Userinfo">
+        select *
+        from userinfo limit #{pageCount},#{pageSize}
+    </select>
+    <select id="userLogin" resultType="org.cqipc.edu.bean.Userinfo">
+        select *
+        from userinfo
+        where u_name = #{u_name}
+          and u_password = #{u_password}
+    </select>
+    <select id="selectUserCount" resultType="int">
+        select count(*)
+        from userinfo
+    </select>
+    <select id="selectUserinfoAllToNorder" resultType="org.cqipc.edu.bean.Userinfo">
+        select *
+        from userinfo
+    </select>
+    <select id="selectUserinfoAddr" resultType="String">
+        select u_addr
+        from userinfo
+        where u_id = #{u_id}
+    </select>
+</mapper>

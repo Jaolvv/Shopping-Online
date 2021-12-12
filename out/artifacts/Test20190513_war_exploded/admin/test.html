@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="GBK">
+    <title>test.html</title>
+    <script src="../EasyUI/jquery.min.js"></script>
+    <script src="../EasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/userManage.js"></script>
+    <script src="../js/easyui-lang-zh_CN.js"></script>
+    <link href="../EasyUI/themes/default/easyui.css" rel="stylesheet"/>
+    <link href="../EasyUI/themes/icon.css" rel="stylesheet"/>
+    <link href="../css/demo.css" rel="stylesheet"/>
+</head>
+
+<body>
+<table class="btbHead">
+    <tr>
+        <td style='width: 25%;'>
+            <img src='../images/common/title.gif' align='absmiddle'/>用户管理
+        </td>
+        <!-- 操作按钮布局 -->
+        <td style="text-align: right;">
+            <a href="javascript:Search()" id="searchBtn" class="easyui-linkbutton"
+               iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+            <a href="javascript:addUser(null)" id="addBtn" class="easyui-linkbutton"
+               iconCls="icon-add">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+            <a href="javascript:updateUser()" id="modifyBtn" class="easyui-linkbutton"
+               iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+            <a href="javascript:deleteUser()" id="deleteBtn" class="easyui-linkbutton"
+               iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+        </td>
+    </tr>
+</table>
+</body>
+
+</html>

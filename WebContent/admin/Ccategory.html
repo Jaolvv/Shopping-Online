@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="GBK">
+	<title>商品类型管理</title>
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="this is my page">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<script src="../EasyUI/jquery.min.js"></script>
+	<script src="../EasyUI/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/ccategoryInfo.js"></script>
+	<script src="../js/easyui-lang-zh_CN.js"></script>
+	<link href="../EasyUI/themes/default/easyui.css" rel="stylesheet" />
+	<link href="../EasyUI/themes/icon.css" rel="stylesheet" />
+	<link href="../css/demo.css" rel="stylesheet" />
+</head>
+
+<body>
+<table class="btbHead" width="100%">
+	<tr>
+		<td style="width: 20%">
+			<img src="../js/common/title.gif" align="absmiddle" />类目信息</td>
+		<td style="width: 80%;text-align:right;">
+			<a href="javascript:insertCcategory()" class="easyui-linkbutton" iconCls="icon-add">添加</a>
+			<a href="javascript:removeCategory()" class="easyui-linkbutton" iconCls="icon-edit">删除</a>
+			<a href="javascript:updateCateInfo()" class="easyui-linkbutton" iconCls="icon-edit">修改</a></td>
+	</tr>
+</table>
+<table id="catedg" class="easyui-datagrid" style="width:100%">
+</table>
+<!--显示类目信息的弹窗-->
+<div id="cateDiv" style="display: none;" class="easyui-dialog" data-options="closed:true,buttons:'#bb',width:'300',height:'200',modal:true">
+	<table style="border-collapse:separate;border-spacing:5px;padding-top:30px;padding-left:50px;">
+		<tr>
+			<td>类目ID: </td>
+			<td><label id="cgid"></label></td>
+		</tr>
+		<tr>
+			<td>类目名称:</td>
+			<td><label id="cgname"></label></td>
+		</tr>
+	</table>
+	<!--确认取消按钮-->
+	<div id="bb" style="text-align:right;">
+		<a href="#" class="easyui-linkbutton" onclick="doClose()" iconCls="icon-cancel">关闭</a>
+		&nbsp;&nbsp;
+	</div>
+</div>
+<!--设置用于修改和添加的弹窗-->
+<div id="categoryInfoDiv" style="display: none;" class="easyui-dialog"
+	 data-options="closed:true,buttons:'#dd',width:'300',height:'200',modal:true">
+	<form id="categoryInfoForm" method="POST" class="easyui-form">
+		<table style="border-collapse:separate;border-spacing:5px;padding-top:50px;padding-left:50px;">
+			<tr>
+				<td align="right">类目名称:</td>
+				<td align="left">
+					<input id="cg_id" name="cg_id" value="0" type="hidden" />
+					<input id="cg_name" name="cg_name" style="width: 140px;background-color:#e9e9e9;"
+						   class="easyui-textbox"
+						   data-options="prompt:'请输入类目名称' ,required:true,missingMessage:'此项必填'" />
+				</td>
+			</tr>
+		</table>
+		<!--确认取消按钮-->
+		<div id="dd" style="text-align:right;">
+			<a href="#" class="easyui-linkbutton" onclick="submitCateInfo()" iconCIs="icon-ok">保存</a>
+			<a href="#" class="easyui-linkbutton" onclick="doCancle()" iconCls="icon-cancel">取消</a>
+		</div>
+	</form>
+</div>
+
+</body>
+
+</html>

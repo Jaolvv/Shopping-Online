@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cqipc.edu.dao.CcategoryDao">
+	<select id="selectCcategoryAll" resultType="org.cqipc.edu.bean.Ccategory">
+		select * from ccategory
+	</select>
+	<select id="selectCcategoryAllPage" resultType="org.cqipc.edu.bean.Ccategory">
+		select * from ccategory limit #{pageCount},#{pageSize}
+	</select>
+	<select id="selecrPageNum" resultType="int">
+		select count(*) from ccategory
+	</select>
+	<insert id="addCategory">
+		insert into ccategory values(null,#{cg_name})
+	</insert>
+	<update id="modifyCategory">
+		update ccategory set cg_name=#{cg_name} where cg_id=#{cg_id}
+	</update>
+	<delete id="removeCategory">
+		delete from ccategory where cg_id=#{cg_id} 
+	</delete>
+	<select id="selectCategoryName" resultType="String">
+		select cg_name from ccategory where cg_id=#{cg_id}
+	</select>
+	
+</mapper>

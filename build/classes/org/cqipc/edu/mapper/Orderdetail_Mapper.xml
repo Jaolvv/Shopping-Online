@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cqipc.edu.dao.OrderdetailDao">
+		<select id="selectOrderdetailByNoid" resultType="org.cqipc.edu.bean.Orderdetail">
+			select o.o_id as "o_id",n.no_id as "noId.no_id",u.u_id as "uId.u_id",
+u.u_name as "uId.u_name",u.u_password as "uId.u_password",
+u.u_email as "uId.u_email",u.u_addr as "uId.u_addr",u.u_zip as "uId.u_zip",
+u.u_phone as "uId.u_phone",u.u_createDate as "uId.u_createDate",
+n.no_orderdate as "noId.no_orderdate",n.no_addr as "noId.no_addr",
+n.no_sumprice as "noId.no_sumprice",p.p_id as "pId.p_id",
+cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+p.p_name as "pId.p_name",p.p_price as "pId.p_price",p.p_supplier as "pId.p_supplier",
+p.p_imgName as "pId.p_imgName",o.quantity as "quantity",o.price as "price" from userinfo u,ccategory cg,
+product p,norder n,orderdetail o where o.no_id=n.no_id and 
+o.p_id=p.p_id and p.cg_id=cg.cg_id and n.u_id=u.u_id 
+and n.no_id=#{no_id} limit #{pageCount},#{pageSize}
+		</select>
+		<select id="selectOrderdetailByNoidCount" resultType="int">
+			select count(*) from orderdetail where no_id=#{no_id}
+		</select>
+		<select id="selectOrderdetailByOid" resultType="org.cqipc.edu.bean.Orderdetail">
+			select o.o_id as "o_id",n.no_id as "noId.no_id",u.u_id as "uId.u_id",
+u.u_name as "uId.u_name",u.u_password as "uId.u_password",
+u.u_email as "uId.u_email",u.u_addr as "uId.u_addr",u.u_zip as "uId.u_zip",
+u.u_phone as "uId.u_phone",u.u_createDate as "uId.u_createDate",
+n.no_orderdate as "noId.no_orderdate",n.no_addr as "noId.no_addr",
+n.no_sumprice as "noId.no_sumprice",p.p_id as "pId.p_id",
+cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+p.p_name as "pId.p_price",p.p_supplier as "pId.p_supplier",
+p.p_imgName as "pId.p_imgName",o.quantity as "quantity",o.price as "price" from userinfo u,ccategory cg,
+product p,norder n,orderdetail o where o.no_id=n.no_id and 
+o.p_id=p.p_id and p.cg_id=cg.cg_id and n.u_id=u.u_id and o.o_id=#{o_id}
+		</select>
+		<insert id="addOrderdetailInfo">
+			insert into orderdetail values(null,#{noId.no_id},#{pId.p_id},#{quantity},#{price})
+		</insert>
+		<delete id="removeOrderdetailById">
+			delete from orderdetail where o_id=#{o_id}
+		</delete>
+		<update id="modifyOrderdetail">
+			update orderdetail set no_id=#{noId.no_id},p_id=#{pId.p_id},
+			quantity=#{quantity},price=#{price} where o_id=#{o_id}
+		</update>
+		<select id="selectOrderdetailNorderPrice" resultType="Double">
+			select price from orderdetail where no_id=#{no_id}
+		</select>
+		<select id="userSelectOrderdetailByNoid" resultType="org.cqipc.edu.bean.Orderdetail">
+			select o.o_id as "o_id",n.no_id as "noId.no_id",u.u_id as "uId.u_id",
+u.u_name as "uId.u_name",u.u_password as "uId.u_password",
+u.u_email as "uId.u_email",u.u_addr as "uId.u_addr",u.u_zip as "uId.u_zip",
+u.u_phone as "uId.u_phone",u.u_createDate as "uId.u_createDate",
+n.no_orderdate as "noId.no_orderdate",n.no_addr as "noId.no_addr",
+n.no_sumprice as "noId.no_sumprice",p.p_id as "pId.p_id",
+cg.cg_id as "cgId.cg_id",cg.cg_name as "cgId.cg_name",
+p.p_name as "pId.p_name",p.p_price as "pId.p_price",p.p_supplier as "pId.p_supplier",
+p.p_imgName as "pId.p_imgName",o.quantity as "quantity",o.price as "price" from userinfo u,ccategory cg,
+product p,norder n,orderdetail o where o.no_id=n.no_id and 
+o.p_id=p.p_id and p.cg_id=cg.cg_id and n.u_id=u.u_id 
+and n.no_id=#{no_id}
+		</select>
+</mapper>

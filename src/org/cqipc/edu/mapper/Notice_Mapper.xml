@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cqipc.edu.dao.NoticeDao">
+    <!-- 总数 -->
+    <select id="selectNoticeTotalCount" resultType="int">
+        select count(*)
+        from notice
+    </select>
+    <!-- 查找公告byid -->
+    <select id="selectNoticeById" parameterType="int" resultType="Notice">
+        select *
+        from notice
+        where n_id = #{n_id}
+    </select>
+    <!-- 查询所有 -->
+    <select id="selectNoticeAll" resultType="Notice">
+        select *
+        from notice
+    </select>
+    <select id="selectNoticeAllPage" parameterType="int" resultType="Notice">
+        select *
+        from notice limit #{pageCount},#{pageSize}
+    </select>
+    <!-- 查出有效日期 -->
+    <select id="selectNoticeByDate" resultType="Notice">
+        select *
+        from notice
+        where TO_DAYS(NOW()) - TO_DAYS(n_date) = 0
+    </select>
+    <insert id="addNotice" parameterType="Notice" useGeneratedKeys="true" keyProperty="n_id">
+        insert into notice(n_title, n_content)
+        values (#{n_title}, #{n_content})
+    </insert>
+
+    <update id="updateNotice" parameterType="Notice">
+        update notice
+        set n_title   = #{n_title},
+            n_content = #{n_content}
+        where n_id = #{n_id}
+    </update>
+
+    <delete id="deleteNotice" parameterType="int">
+        delete
+        from notice
+        where n_id = #{n_id}
+    </delete>
+
+</mapper>

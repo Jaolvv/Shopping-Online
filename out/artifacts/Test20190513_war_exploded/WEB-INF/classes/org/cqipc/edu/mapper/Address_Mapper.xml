@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cqipc.edu.dao.AddressDao">
+
+    <select id="selectAddressTotalCount" resultType="int">
+        select count(*)
+        from address
+    </select>
+
+    <select id="selectAllAddressByuid" parameterType="int"
+            resultMap="addressOfuid">
+        select *
+        from address as a
+                 right join userinfo as u on a.u_id = u.u_id
+        where u.u_id = #{u_id}
+    </select>
+
+    <!-- 分页显示用户地址 -->
+    <select id="selectAllAddressPageByuid" resultMap="addressOfuid">
+        select *
+        from address as a
+                 right join userinfo as u on a.u_id = u.u_id
+        where u.u_id = #{u_id} limit #{pageCount}
+            , #{pageSize}
+    </select>
+
+    <select id="selectAllAddress" resultMap="addressOf">
+        select *
+        from address as a
+                 join userinfo as u on a.u_id = u.u_id
+    </select>
+
+    <!-- 分页显示所有地址 -->
+    <select id="selectAllAddressPage" resultMap="addressOf">
+        select *
+        from address as a
+                 join userinfo as u on a.u_id = u.u_id limit #{pageCount}, #{pageSize}
+    </select>
+
+    <resultMap type="Address" id="addressOfuid">
+        <id property="a_id" column="a_id"/>
+        <result property="a_addr" column="a_addr"/>
+        <collection property="userinfo" ofType="Userinfo">
+            <id property="u_id" column="u_id"/>
+            <result property="u_name" column="u_name"/>
+            <result property="u_addr" column="u_addr"/>
+        </collection>
+    </resultMap>
+    <resultMap type="Address" id="addressOf">
+        <id property="a_id" column="a_id"/>
+        <result property="a_addr" column="a_addr"/>
+        <collection property="userinfo" ofType="Userinfo">
+            <id property="u_id" column="u_id"/>
+            <result property="u_name" column="u_name"/>
+        </collection>
+    </resultMap>
+
+    <insert id="addAddress" parameterType="Address">
+        insert into address
+        values (null, #{a_addr}, #{u_id})
+    </insert>
+
+    <update id="updateAddress" parameterType="Address">
+        update address
+        set a_addr = #{a_addr},
+            u_id   = #{u_id}
+        where a_id = #{a_id}
+    </update>
+
+    <delete id="deleteAddress" parameterType="int">
+        delete
+        from address
+        where a_id = #{a_id}
+    </delete>
+</mapper>

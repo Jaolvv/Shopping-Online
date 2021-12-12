@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cqipc.edu.dao.NorderDao">
+		<select id="selectNorderPageAll" resultType="org.cqipc.edu.bean.Norder">
+			select n.no_id as "no_id",u.u_id as "uId.u_id",u.u_name as "uId.u_name",u.u_password as "uId.u_password",
+u.u_email as "uId.u_email",u.u_addr as "uId.u_addr",u.u_zip as "uId.u_zip",
+u.u_phone as "uId.u_phone",u.u_createDate as "uId.u_createDate",n.no_orderdate as 
+"no_orderdate",n.no_addr as "no_addr",n.no_sumprice as "no_sumprice"
+from norder n,userinfo u where n.u_id=u.u_id limit #{pageCount},#{pageSize}
+		</select>
+		<select id="selectNorderPageAllCount" resultType="int">
+			select count(*) from norder
+		</select>
+		<select id="selectNorderByUid" resultType="org.cqipc.edu.bean.Norder">
+			select n.no_id as "no_id",u.u_id as "uId.u_id",u.u_name as "uId.u_name",u.u_password as "uId.u_password",
+u.u_email as "uId.u_email",u.u_addr as "uId.u_addr",u.u_zip as "uId.u_zip",
+u.u_phone as "uId.u_phone",u.u_createDate as "uId.u_createDate",n.no_orderdate as 
+"no_orderdate",n.no_addr as "no_addr",n.no_sumprice as "no_sumprice"
+from norder n,userinfo u where n.u_id=u.u_id and u.u_id=#{u_id} limit #{pageCount},#{pageSize}
+		</select>
+		<select id="selectNorderByUidCount" resultType="int">
+			select count(*) from norder where u_id=#{u_id}
+		</select>
+		<select id="selectNorderByNid" resultType="org.cqipc.edu.bean.Norder">
+			select n.no_id as "no_id",u.u_id as "uId.u_id",u.u_name as "uId.u_name",u.u_password as "uId.u_password",
+u.u_email as "uId.u_email",u.u_addr as "uId.u_addr",u.u_zip as "uId.u_zip",
+u.u_phone as "uId.u_phone",u.u_createDate as "uId.u_createDate",n.no_orderdate as 
+"no_orderdate",n.no_addr as "no_addr",n.no_sumprice as "no_sumprice"
+from norder n,userinfo u where n.u_id=u.u_id and n.no_id=#{no_id}
+		</select>
+		<insert id="addNorderInfo" useGeneratedKeys="true" 
+		keyProperty="no_id" parameterType="Norder">
+			insert into norder values(null,#{uId.u_id},#{no_orderdate},#{no_addr},
+			#{no_sumprice})
+		</insert>
+		<delete id="removeNorderById">
+			delete from norder where no_id=#{no_id}
+		</delete>
+		<update id="modifyNorderInfo">
+			update norder set u_id=#{uId.u_id},no_addr=#{no_addr},
+			no_sumprice=#{no_sumprice} where no_id=#{no_id}
+		</update>
+		<update id="modifyNorderSumprice">
+			update norder set no_sumprice=#{no_sumprice} where no_id=#{no_id}
+		</update>
+		<select id="selectNorderLayUIPageAll" resultType="Norder">
+			select n.no_id as "no_id",u.u_id as "uId.u_id",u.u_name as "uId.u_name",u.u_password as "uId.u_password",
+u.u_email as "uId.u_email",u.u_addr as "uId.u_addr",u.u_zip as "uId.u_zip",
+u.u_phone as "uId.u_phone",u.u_createDate as "uId.u_createDate",n.no_orderdate as 
+"no_orderdate",n.no_addr as "no_addr",n.no_sumprice as "no_sumprice"
+from norder n,userinfo u where n.u_id=u.u_id and u.u_id=#{u_id}
+		</select>
+</mapper>
