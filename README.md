@@ -57,3 +57,14 @@
 | 14   | 实现客户信息的改，查功能模块                   | 1           |
 | 15   | 项目部署，启动并测试                           | 0.5         |
 
+## 项目效果图
+### 首页
+![](https://timber.oss-cn-chengdu.aliyuncs.com/img/utool_up/MainPage.jpg)
+### 购物页
+![](https://timber.oss-cn-chengdu.aliyuncs.com/img/utool_up/QQ%E6%88%AA%E5%9B%BE20220111224517.png)
+### 购物车页
+![](https://timber.oss-cn-chengdu.aliyuncs.com/img/utool_up/QQ%E6%88%AA%E5%9B%BE20220111224554.png)
+### 资料页
+![](https://timber.oss-cn-chengdu.aliyuncs.com/img/utool_up/QQ%E6%88%AA%E5%9B%BE20220111224638.png)
+### 后台管理页
+![](https://timber.oss-cn-chengdu.aliyuncs.com/img/utool_up/QQ%E6%88%AA%E5%9B%BE20220111224617.png)
